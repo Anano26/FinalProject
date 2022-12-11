@@ -30,8 +30,10 @@ namespace FinalProject.Configurations
                 .HasForeignKey(x => x.Id)
                 .HasConstraintName("FK_Student_Department");
 
-            builder.HasOne(x => x.Address)
-                .WithOne(x => x.Student);
+           // builder.HasOne(x => x.Semester);
+
+            builder.HasOne(x => x.Address);
+              //  .WithOne(x => x.Student);
 
             builder.HasMany(x => x.StudentSubjects)
                 .WithOne(x => x.Student)

@@ -13,17 +13,22 @@ namespace FinalProject.Configurations
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Amount)
-                .IsRequired();
+                .IsRequired()
+                .HasColumnType("decimal(10,2)");
 
             builder.Property(x => x.Debt)
-                .IsRequired();
+                .IsRequired()
+                .HasColumnType("decimal(10,2)");
 
             builder.HasOne(x => x.Student)
                 .WithMany(x => x.Balances)
                 .HasForeignKey(x => x.Id)
                 .HasConstraintName("FL_Balance_Student");
 
-            builder.HasOne(x => x.Semester);
+            builder.HasOne(x => x.Semester)
+                .WithMany(x => x.Balances)
+                .HasForeignKey(x => x.Id)
+                .HasConstraintName("FL_Balance_Semester");
             
 
         }

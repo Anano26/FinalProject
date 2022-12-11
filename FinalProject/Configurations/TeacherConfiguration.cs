@@ -34,8 +34,8 @@ namespace FinalProject.Configurations
                     .HasForeignKey(x => x.Id)
                     .HasConstraintName("FK_Teacher_Department");
 
-            builder.HasOne(x => x.Address)
-                    .WithOne(x => x.Teacher);
+            builder.HasOne(x => x.Address);
+                    //.WithOne(x => x.Teacher);
         }
     }
 }

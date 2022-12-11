@@ -27,13 +27,13 @@ namespace FinalProject.Configurations
 
             builder.HasMany(x => x.Students)
                 .WithOne(x => x.Department)
-                .HasForeignKey(x => x.Id)
-                .HasConstraintName("FK_Department_Student");
+                .HasForeignKey(x => x.Id);
+            //.HasConstraintName("FK_Department_Student");
 
             builder.HasMany(x => x.Teachers)
                 .WithOne(x => x.Department)
-                .HasForeignKey(x => x.Id)
-                .HasConstraintName("FK_Department_Teacher");
+                .HasForeignKey(x => x.Id);
+                //.HasConstraintName("FK_Department_Teacher");
 
         }
     }

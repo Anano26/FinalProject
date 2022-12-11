@@ -17,12 +17,6 @@ namespace FinalProject.Configurations
             builder.Property(x => x.Address2)
                 .IsRequired()
                 .HasMaxLength(50);
-
-            builder.HasOne(x => x.Student)
-                .WithOne(x => x.Address);
-
-            builder.HasOne(x => x.Teacher)
-                .WithOne(x => x.Address);
         }
     }
 }
