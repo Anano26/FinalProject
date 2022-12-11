@@ -11,14 +11,31 @@ namespace FinalProject.Configurations
             builder.ToTable("Subject", "schedule");
 
             builder.HasKey(x => x.Id);
+            
             builder.Property(x => x.Credit)
                     .IsRequired();
+            
             builder.Property(x => x.Name)
                     .IsRequired()
                     .HasMaxLength(50);
 
-            builder.HasMany(x => x.Students)
-                    .WithMany(x => x.Subjects);
+            builder.Property(x => x.LowerBound)
+                    .IsRequired();
+
+            builder.HasMany(x => x.Teachers)
+                    .WithOne(x => x.Subject)
+                    .HasForeignKey(x => x.Id)
+                    .HasConstraintName("FK_Subject_Teacher");
+
+            builder.HasMany(x => x.Schedules)
+                    .WithOne(x => x.Subject)
+                    .HasForeignKey(x => x.Id)
+                    .HasConstraintName("FK_Subject_Schedule");
+
+            builder.HasMany(x => x.StudentSubjects)
+                    .WithOne(x => x.Subject)
+                    .HasForeignKey(x => x.Id)
+                    .HasConstraintName("FK_Subject_StudentSubject");
         }
     }
 }

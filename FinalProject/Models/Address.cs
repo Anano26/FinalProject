@@ -6,7 +6,7 @@
         public string Address1 { get; set; }
         public string Address2 { get; set; }
 
-        public List<Student> Students { get; set; }
-        public List<Teacher> Teachers { get; set; }
+        public Teacher? Teacher { get; set; }
+        public Student? Student { get; set; }
     }
 }

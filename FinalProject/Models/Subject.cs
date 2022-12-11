@@ -7,8 +7,8 @@
         public string Name { get; set; }
         public int LowerBound { get; set; }
 
-        public List<Student> Students { get; set; }
-        public List<Teacher> Teachers { get; set; }
-
+        public IEnumerable<Schedule> Schedules { get; set; }
+        public IEnumerable<Teacher> Teachers { get; set; }
+        public IEnumerable<StudentSubject> StudentSubjects { get; set; }
     }
 }
