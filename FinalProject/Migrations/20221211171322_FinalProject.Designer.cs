@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinalProject.Migrations
 {
     [DbContext(typeof(ScheduleDbContext))]
-    [Migration("20221211160107_FinalProject")]
+    [Migration("20221211171322_FinalProject")]
     partial class FinalProject
     {
         /// <inheritdoc />
@@ -120,13 +120,13 @@ namespace FinalProject.Migrations
             modelBuilder.Entity("FinalProject.Models.Schedule", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("FK_Subject_Schedule")
-                        .HasColumnType("int");
 
                     b.Property<int?>("RoomId")
                         .HasColumnType("int");
@@ -137,11 +137,16 @@ namespace FinalProject.Migrations
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("RoomId");
 
                     b.HasIndex("SemesterId");
+
+                    b.HasIndex("SubjectId");
 
                     b.ToTable("Schedule", "schedule");
                 });
@@ -307,13 +312,6 @@ namespace FinalProject.Migrations
 
             modelBuilder.Entity("FinalProject.Models.Schedule", b =>
                 {
-                    b.HasOne("FinalProject.Models.Subject", "Subject")
-                        .WithMany("Schedules")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_Subject_Schedule");
-
                     b.HasOne("FinalProject.Models.Room", "Room")
                         .WithMany()
                         .HasForeignKey("RoomId");
@@ -321,6 +319,12 @@ namespace FinalProject.Migrations
                     b.HasOne("FinalProject.Models.Semester", "Semester")
                         .WithMany()
                         .HasForeignKey("SemesterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FinalProject.Models.Subject", "Subject")
+                        .WithMany()
+                        .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -422,8 +426,6 @@ namespace FinalProject.Migrations
 
             modelBuilder.Entity("FinalProject.Models.Subject", b =>
                 {
-                    b.Navigation("Schedules");
-
                     b.Navigation("StudentSubjects");
 
                     b.Navigation("Teachers");

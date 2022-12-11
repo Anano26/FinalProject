@@ -21,12 +21,9 @@ namespace FinalProject.Configurations
 
             builder.HasOne(x => x.Semester);
 
-            builder.HasOne(x => x.Subject)
-                .WithMany(x => x.Schedules)
-                .HasForeignKey(x => x.Id)
-                .HasForeignKey("FK_Subject_Schedule");
-                
             builder.HasOne(x => x.Room);
+
+            builder.HasOne(x => x.Subject);
         }
     }
 }

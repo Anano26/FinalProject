@@ -107,12 +107,13 @@ namespace FinalProject.Migrations
                 schema: "schedule",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RoomId = table.Column<int>(type: "int", nullable: true),
                     SemesterId = table.Column<int>(type: "int", nullable: false),
-                    FKSubjectSchedule = table.Column<int>(name: "FK_Subject_Schedule", type: "int", nullable: false)
+                    SubjectId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -131,8 +132,8 @@ namespace FinalProject.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Subject_Schedule",
-                        column: x => x.Id,
+                        name: "FK_Schedule_Subject_SubjectId",
+                        column: x => x.SubjectId,
                         principalSchema: "schedule",
                         principalTable: "Subject",
                         principalColumn: "Id",
@@ -252,14 +253,14 @@ namespace FinalProject.Migrations
                         principalSchema: "schedule",
                         principalTable: "Student",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Subject_StudentSubject",
                         column: x => x.Id,
                         principalSchema: "schedule",
                         principalTable: "Subject",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -279,6 +280,12 @@ namespace FinalProject.Migrations
                 schema: "schedule",
                 table: "Schedule",
                 column: "SemesterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Schedule_SubjectId",
+                schema: "schedule",
+                table: "Schedule",
+                column: "SubjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Student_AddressId",

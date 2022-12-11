@@ -27,11 +27,6 @@ namespace FinalProject.Configurations
                     .HasForeignKey(x => x.Id)
                     .HasConstraintName("FK_Subject_Teacher");
 
-            builder.HasMany(x => x.Schedules)
-                    .WithOne(x => x.Subject)
-                    .HasForeignKey(x => x.Id)
-                    .HasConstraintName("FK_Subject_Schedule");
-
             builder.HasMany(x => x.StudentSubjects)
                     .WithOne(x => x.Subject)
                     .HasForeignKey(x => x.Id)
