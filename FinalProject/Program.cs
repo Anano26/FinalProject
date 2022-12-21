@@ -1,12 +1,12 @@
 using FinalProject;
+using FinalProject.Models;
 using Microsoft.EntityFrameworkCore;
+using Repository.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ScheduleDbContext>(options =>
@@ -14,6 +14,7 @@ builder.Services.AddDbContext<ScheduleDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ScheduleDbContext"));
 });
 
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
 var app = builder.Build();
 

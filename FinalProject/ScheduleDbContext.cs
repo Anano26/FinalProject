@@ -7,7 +7,9 @@ namespace FinalProject
 {
     public class ScheduleDbContext : DbContext
     {
-        //public ScheduleDbContext(DbContextOptions<ScheduleDbContext> options) : base(options) { }
+        public ScheduleDbContext(DbContextOptions<ScheduleDbContext> options) : base(options) { }
+
+        //public ScheduleDbContext() { }
 
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Balance> Balances { get; set; }
@@ -20,25 +22,25 @@ namespace FinalProject
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Server=localhost\SQLEXPRESS;Database=Schedule;Trusted_Connection=true;Trust Server Certificate=true;");
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer(@"Server=localhost\SQLEXPRESS;Database=Schedule;Trusted_Connection=true;Trust Server Certificate=true;");
+        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.ApplyConfigurationsFromAssembly(typeof(ScheduleConfiguration).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ScheduleConfiguration).Assembly);
 
-            modelBuilder.ApplyConfiguration(new AddressConfiguration());
-            modelBuilder.ApplyConfiguration(new BalanceConfiguration());
-            modelBuilder.ApplyConfiguration(new DepartmentConfiguration());
-            modelBuilder.ApplyConfiguration(new RoomConfiguration());
-            modelBuilder.ApplyConfiguration(new ScheduleConfiguration());
-            modelBuilder.ApplyConfiguration(new SemesterConfiguration());
-            modelBuilder.ApplyConfiguration(new StudentConfiguration());
-            modelBuilder.ApplyConfiguration(new StudentSubjectConfiguration());
-            modelBuilder.ApplyConfiguration(new SubjectConfiguration());
-            modelBuilder.ApplyConfiguration(new TeacherConfiguration());
+            //modelBuilder.ApplyConfiguration(new AddressConfiguration());
+            //modelBuilder.ApplyConfiguration(new BalanceConfiguration());
+            //modelBuilder.ApplyConfiguration(new DepartmentConfiguration());
+            //modelBuilder.ApplyConfiguration(new RoomConfiguration());
+            //modelBuilder.ApplyConfiguration(new ScheduleConfiguration());
+            //modelBuilder.ApplyConfiguration(new SemesterConfiguration());
+            //modelBuilder.ApplyConfiguration(new StudentConfiguration());
+            //modelBuilder.ApplyConfiguration(new StudentSubjectConfiguration());
+            //modelBuilder.ApplyConfiguration(new SubjectConfiguration());
+            //modelBuilder.ApplyConfiguration(new TeacherConfiguration());
         }
     }
 }
