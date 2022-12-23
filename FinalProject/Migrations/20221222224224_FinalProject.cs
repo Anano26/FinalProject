@@ -88,7 +88,7 @@ namespace FinalProject.Migrations
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     MaxNumbOfStudents = table.Column<int>(type: "int", nullable: false),
                     CurrentAmount = table.Column<int>(type: "int", nullable: false),
-                    SemesterId = table.Column<int>(type: "int", nullable: false)
+                    SemesterId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -98,8 +98,7 @@ namespace FinalProject.Migrations
                         column: x => x.SemesterId,
                         principalSchema: "schedule",
                         principalTable: "Semester",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -112,8 +111,8 @@ namespace FinalProject.Migrations
                     StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RoomId = table.Column<int>(type: "int", nullable: true),
-                    SemesterId = table.Column<int>(type: "int", nullable: false),
-                    SubjectId = table.Column<int>(type: "int", nullable: false)
+                    SemesterId = table.Column<int>(type: "int", nullable: true),
+                    SubjectId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -129,15 +128,13 @@ namespace FinalProject.Migrations
                         column: x => x.SemesterId,
                         principalSchema: "schedule",
                         principalTable: "Semester",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Schedule_Subject_SubjectId",
                         column: x => x.SubjectId,
                         principalSchema: "schedule",
                         principalTable: "Subject",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -150,7 +147,7 @@ namespace FinalProject.Migrations
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     PersonalId = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     StartYear = table.Column<int>(type: "int", nullable: false),
-                    AddressId = table.Column<int>(type: "int", nullable: false)
+                    AddressId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -160,8 +157,7 @@ namespace FinalProject.Migrations
                         column: x => x.AddressId,
                         principalSchema: "schedule",
                         principalTable: "Address",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Student_Department",
                         column: x => x.Id,
@@ -180,7 +176,7 @@ namespace FinalProject.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     PersonalId = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    AddressId = table.Column<int>(type: "int", nullable: false)
+                    AddressId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -190,8 +186,7 @@ namespace FinalProject.Migrations
                         column: x => x.AddressId,
                         principalSchema: "schedule",
                         principalTable: "Address",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Teacher_Department",
                         column: x => x.Id,
@@ -226,14 +221,14 @@ namespace FinalProject.Migrations
                         principalSchema: "schedule",
                         principalTable: "Student",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FL_Balance_Semester",
                         column: x => x.Id,
                         principalSchema: "schedule",
                         principalTable: "Semester",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

@@ -6,9 +6,9 @@ namespace Repository.Repositories;
 
 public class GenericRepository<T> : IGenericRepository<T> where T : class
 {
-    private DbContext _dbContext;
+    private ScheduleDbContext _dbContext;
 
-    public GenericRepository(DbContext dbContext)
+    public GenericRepository(ScheduleDbContext dbContext)
     {
         _dbContext = dbContext;
     }
