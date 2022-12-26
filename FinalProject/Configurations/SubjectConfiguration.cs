@@ -21,16 +21,6 @@ namespace FinalProject.Configurations
 
             builder.Property(x => x.LowerBound)
                     .IsRequired();
-
-            builder.HasMany(x => x.Teachers)
-                    .WithOne(x => x.Subject)
-                    .HasForeignKey(x => x.Id)
-                    .HasConstraintName("FK_Subject_Teacher");
-
-            builder.HasMany(x => x.StudentSubjects)
-                    .WithOne(x => x.Subject)
-                    .HasForeignKey(x => x.Id)
-                    .HasConstraintName("FK_Subject_StudentSubject");
         }
     }
 }

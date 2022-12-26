@@ -15,15 +15,9 @@ namespace FinalProject.Configurations
             builder.Property(x => x.Point)
                 .IsRequired();
 
-            builder.HasOne(x => x.Student)
-                .WithMany(x => x.StudentSubjects)
-                .HasForeignKey(x => x.Id)
-                .HasConstraintName("FK_StudentSubject_Student");
+            builder.HasOne(x => x.Student);
 
-            builder.HasOne(x => x.Subject)
-                .WithMany(x => x.StudentSubjects)
-                .HasForeignKey(x => x.Id)
-                .HasConstraintName("FK_StudentSubject_Subject");
+            builder.HasOne(x => x.Subject);
         }
     }
 }

@@ -22,13 +22,11 @@ namespace FinalProject.Configurations
 
             builder.HasOne(x => x.Student)
                 .WithMany(x => x.Balances)
-                .HasForeignKey(x => x.Id)
-                .HasConstraintName("FL_Balance_Student");
+                .HasForeignKey(x => x.Id);
 
             builder.HasOne(x => x.Semester)
                 .WithMany(x => x.Balances)
-                .HasForeignKey(x => x.Id)
-                .HasConstraintName("FL_Balance_Semester");
+                .HasForeignKey(x => x.Id);
             
 
         }

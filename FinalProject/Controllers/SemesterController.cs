@@ -20,9 +20,9 @@ namespace FinalProject.Controllers
         [HttpGet()]
         public async Task<IEnumerable<SemesterModel>> GetAllAsync()
         {
-            var Semesters = await _repository.GetAllAsync();
+            var semesters = await _repository.GetAllAsync();
 
-            var rViewModel = Semesters.Select(x => new SemesterModel
+            var rViewModel = semesters.Select(x => new SemesterModel
             {
                 Name = x.Name,
                 StartDate = x.StartDate,
@@ -61,7 +61,6 @@ namespace FinalProject.Controllers
                 AvailableGPA = firstSemester.AvailableGPA.ToString(),
                 EndDate = firstSemester.EndDate,
             };
-
         }
 
         [HttpPost]
@@ -77,7 +76,11 @@ namespace FinalProject.Controllers
             await _repository.SaveAsync();
         }
 
-
-
+        [HttpDelete]
+        public void DeleteOneAsync(int id)
+        {
+            _repository.Delete(id);
+            _repository.SaveAsync();
+        }
     }
 }

@@ -30,6 +30,19 @@ namespace FinalProject.Controllers
             return rViewModel;
         }
 
+        [HttpGet("id={id}")]
+        public async Task<RoomModel> GetById(int id)
+        {
+            var balance = await _repository.GetByIdAsync(id);
+
+            return new RoomModel
+            {
+                Description = balance.Description,
+                IsFree = balance.IsFree.ToString(),
+                MaxNumberOfStudents = balance.MaxNumberOfStudents.ToString()
+            };
+        }
+
         [HttpPost]
         public async Task Add(RoomModel room)
         {
@@ -41,6 +54,13 @@ namespace FinalProject.Controllers
             });
 
             await _repository.SaveAsync();
+        }
+
+        [HttpDelete]
+        public void DeleteOneAsync(int id)
+        {
+            _repository.Delete(id);
+            _repository.SaveAsync();
         }
     }
 }

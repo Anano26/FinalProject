@@ -24,17 +24,6 @@ namespace FinalProject.Configurations
                 .IsRequired();
 
             builder.HasOne(x => x.Semester);
-
-            builder.HasMany(x => x.Students)
-                .WithOne(x => x.Department)
-                .HasForeignKey(x => x.Id);
-            //.HasConstraintName("FK_Department_Student");
-
-            builder.HasMany(x => x.Teachers)
-                .WithOne(x => x.Department)
-                .HasForeignKey(x => x.Id);
-                //.HasConstraintName("FK_Department_Teacher");
-
         }
     }
 }

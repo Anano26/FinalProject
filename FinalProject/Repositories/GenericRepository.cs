@@ -49,7 +49,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         if (entity != null)
         {
             _dbContext.Set<T>().Remove(entity);
-            _dbContext.Entry(entity).State = EntityState.Modified;
+            _dbContext.Entry(entity).State = EntityState.Deleted;
         }
     }
 

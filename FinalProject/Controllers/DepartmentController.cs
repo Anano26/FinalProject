@@ -6,7 +6,7 @@ using Repository.Repositories;
 namespace FinalProject.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("department")]
     public class DepartmentController : ControllerBase
     {
         private readonly IGenericRepository<Department> _repository;
@@ -18,9 +18,9 @@ namespace FinalProject.Controllers
         [HttpGet]
         public async Task<IEnumerable<DepartmentModel>> GetAllAsync()
         {
-            var schedules = await _repository.GetAllAsync();
+            var departments = await _repository.GetAllAsync();
 
-            var rViewModel = schedules.Select(x => new DepartmentModel
+            var rViewModel = departments.Select(x => new DepartmentModel
             {
                 Name = x.Name,
                 MaxNumbOfStudents = x.MaxNumbOfStudents.ToString(),
@@ -28,6 +28,34 @@ namespace FinalProject.Controllers
             });
 
             return rViewModel;
+        }
+
+        [HttpGet("name={name}")]
+        public async Task<IEnumerable<DepartmentModel>> GetByName(string name)
+        {
+            var departments = await _repository.GetAllAsync(x => x.Name == name);
+
+            var rViewModel = departments.Select(x => new DepartmentModel
+            {
+                Name = x.Name,
+                MaxNumbOfStudents = x.MaxNumbOfStudents.ToString(),
+                CurrentAmount = x.CurrentAmount.ToString()
+            });
+
+            return rViewModel;
+        }
+
+        [HttpGet("id={id}")]
+        public async Task<DepartmentModel> GetById(int id)
+        {
+            var department = await _repository.GetByIdAsync(id);
+
+            return new DepartmentModel
+            {
+                Name = department.Name,
+                MaxNumbOfStudents = department.MaxNumbOfStudents.ToString(),
+                CurrentAmount = department.CurrentAmount.ToString()
+            };
         }
 
         [HttpPost]
@@ -41,6 +69,13 @@ namespace FinalProject.Controllers
             });
 
             await _repository.SaveAsync();
+        }
+
+        [HttpDelete("/department/delete/id={id}")]
+        public void DeleteOne(int id)
+        {
+            _repository.Delete(id);
+            _repository.SaveAsync();
         }
     }
 }

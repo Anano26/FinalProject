@@ -32,6 +32,18 @@ namespace FinalProject.Controllers
             return rViewModel;
         }
 
+        [HttpGet("id={id}")]
+        public async Task<ScheduleModel> GetById(int id)
+        {
+            var schedule = await _repository.GetByIdAsync(id);
+
+            return new ScheduleModel
+            {
+                StartTime = schedule.StartTime,
+                EndTime = schedule.EndTime
+            };
+        }
+
         [HttpPost]
         public async Task Add(ScheduleModel schedule)
         {
@@ -41,6 +53,13 @@ namespace FinalProject.Controllers
                 EndTime = schedule.EndTime
             });
             await _repository.SaveAsync();
+        }
+
+        [HttpDelete]
+        public void DeleteOneAsync(int id)
+        {
+            _repository.Delete(id);
+            _repository.SaveAsync();
         }
     }
 }

@@ -24,18 +24,11 @@ namespace FinalProject.Configurations
                     .HasMaxLength(50)
                     .IsRequired();
 
-            builder.HasOne(x => x.Subject)
-                    .WithMany(x => x.Teachers)
-                    .HasForeignKey(x => x.Id)
-                    .HasConstraintName("FK_Teacher_Subject");
+            builder.HasOne(x => x.Subject);
 
-            builder.HasOne(x => x.Department)
-                    .WithMany(x => x.Teachers)
-                    .HasForeignKey(x => x.Id)
-                    .HasConstraintName("FK_Teacher_Department");
+            builder.HasOne(x => x.Department);
 
             builder.HasOne(x => x.Address);
-                    //.WithOne(x => x.Teacher);
         }
     }
 }

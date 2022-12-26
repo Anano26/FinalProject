@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinalProject.Migrations
 {
     [DbContext(typeof(ScheduleDbContext))]
-    [Migration("20221222224224_FinalProject")]
+    [Migration("20221223205804_FinalProject")]
     partial class FinalProject
     {
         /// <inheritdoc />
@@ -181,9 +181,15 @@ namespace FinalProject.Migrations
             modelBuilder.Entity("FinalProject.Models.Student", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<int?>("AddressId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
 
                     b.Property<string>("FirstName")
@@ -208,18 +214,33 @@ namespace FinalProject.Migrations
 
                     b.HasIndex("AddressId");
 
+                    b.HasIndex("DepartmentId");
+
                     b.ToTable("Student", "schedule");
                 });
 
             modelBuilder.Entity("FinalProject.Models.StudentSubject", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Point")
                         .HasColumnType("int");
 
+                    b.Property<int?>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SubjectId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.HasIndex("SubjectId");
 
                     b.ToTable("StudentSubject", "schedule");
                 });
@@ -251,9 +272,15 @@ namespace FinalProject.Migrations
             modelBuilder.Entity("FinalProject.Models.Teacher", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<int?>("AddressId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
 
                     b.Property<string>("FirstName")
@@ -271,9 +298,16 @@ namespace FinalProject.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int?>("SubjectId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("SubjectId");
 
                     b.ToTable("Teacher", "schedule");
                 });
@@ -284,15 +318,13 @@ namespace FinalProject.Migrations
                         .WithMany("Balances")
                         .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FL_Balance_Semester");
+                        .IsRequired();
 
                     b.HasOne("FinalProject.Models.Student", "Student")
                         .WithMany("Balances")
                         .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_Student_Balance");
+                        .IsRequired();
 
                     b.Navigation("Semester");
 
@@ -336,11 +368,8 @@ namespace FinalProject.Migrations
                         .HasForeignKey("AddressId");
 
                     b.HasOne("FinalProject.Models.Department", "Department")
-                        .WithMany("Students")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_Student_Department");
+                        .WithMany()
+                        .HasForeignKey("DepartmentId");
 
                     b.Navigation("Address");
 
@@ -350,18 +379,12 @@ namespace FinalProject.Migrations
             modelBuilder.Entity("FinalProject.Models.StudentSubject", b =>
                 {
                     b.HasOne("FinalProject.Models.Student", "Student")
-                        .WithMany("StudentSubjects")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_StudentSubject_Student");
+                        .WithMany()
+                        .HasForeignKey("StudentId");
 
                     b.HasOne("FinalProject.Models.Subject", "Subject")
-                        .WithMany("StudentSubjects")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_Subject_StudentSubject");
+                        .WithMany()
+                        .HasForeignKey("SubjectId");
 
                     b.Navigation("Student");
 
@@ -375,31 +398,18 @@ namespace FinalProject.Migrations
                         .HasForeignKey("AddressId");
 
                     b.HasOne("FinalProject.Models.Department", "Department")
-                        .WithMany("Teachers")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_Teacher_Department");
+                        .WithMany()
+                        .HasForeignKey("DepartmentId");
 
                     b.HasOne("FinalProject.Models.Subject", "Subject")
-                        .WithMany("Teachers")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_Teacher_Subject");
+                        .WithMany()
+                        .HasForeignKey("SubjectId");
 
                     b.Navigation("Address");
 
                     b.Navigation("Department");
 
                     b.Navigation("Subject");
-                });
-
-            modelBuilder.Entity("FinalProject.Models.Department", b =>
-                {
-                    b.Navigation("Students");
-
-                    b.Navigation("Teachers");
                 });
 
             modelBuilder.Entity("FinalProject.Models.Semester", b =>
@@ -410,15 +420,6 @@ namespace FinalProject.Migrations
             modelBuilder.Entity("FinalProject.Models.Student", b =>
                 {
                     b.Navigation("Balances");
-
-                    b.Navigation("StudentSubjects");
-                });
-
-            modelBuilder.Entity("FinalProject.Models.Subject", b =>
-                {
-                    b.Navigation("StudentSubjects");
-
-                    b.Navigation("Teachers");
                 });
 #pragma warning restore 612, 618
         }

@@ -33,6 +33,19 @@ namespace FinalProject.Controllers
             return rViewModel;
         }
 
+        [HttpGet("{id}")]
+        public async Task<TeacherModel> GetOne(int id)
+        {
+            var teacher = await _repository.GetByIdAsync(id);
+
+            return new TeacherModel
+            {
+                FirstName = teacher.FirstName,
+                LastName = teacher.LastName,
+                PersonalId = teacher.PersonalId
+            };
+        }
+
         [HttpPost]
         public async Task Add(TeacherModel teacher)
         {
@@ -43,6 +56,12 @@ namespace FinalProject.Controllers
                 PersonalId = teacher.PersonalId
             });
             await _repository.SaveAsync();
+        }
+
+        [HttpDelete]
+        public void DeleteOneAsync(int id)
+        {
+            _repository.Delete(id);
         }
     }
 }

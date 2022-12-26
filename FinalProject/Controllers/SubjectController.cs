@@ -1,6 +1,7 @@
 ﻿using FinalProject.Models;
 using FinalProject.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Repository.Repositories;
 
 namespace FinalProject.Controllers
@@ -32,10 +33,24 @@ namespace FinalProject.Controllers
             return rViewModel;
         }
 
+        [HttpGet("{id}")]
+        public async Task<SubjectModel> GetOne(int id)
+        {
+            var subject = await _repository.GetByIdAsync(id);
+
+            return new SubjectModel
+            {
+                Name = subject.Name,
+                Credit = subject.Credit.ToString(),
+                LowerBound = subject.Credit.ToString()
+            };
+        }
+
         [HttpDelete]
-        public void DeleteOneAsync(int id)
+        public async void DeleteOneAsync(int id)
         {
             _repository.Delete(id);
+            _repository.SaveAsync();
         }
 
 

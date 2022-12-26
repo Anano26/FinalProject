@@ -29,6 +29,18 @@ namespace FinalProject.Controllers
             return rViewModel;
         }
 
+        [HttpGet("id={id}")]
+        public async Task<BalanceModel> GetById(int id)
+        {
+            var balance = await _repository.GetByIdAsync(id);
+
+            return new BalanceModel
+            {
+                Debt = balance.Debt.ToString(),
+                Amount = balance.Amount.ToString()
+            };
+        }
+
         [HttpPost]
         public async Task Add(BalanceModel balance)
         {
@@ -39,6 +51,13 @@ namespace FinalProject.Controllers
             });
 
             await _repository.SaveAsync();
+        }
+
+        [HttpDelete]
+        public void DeleteOneAsync(int id)
+        {
+            _repository.Delete(id);
+            _repository.SaveAsync();
         }
     }
 }
