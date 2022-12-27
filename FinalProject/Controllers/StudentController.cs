@@ -17,6 +17,11 @@ namespace FinalProject.Controllers
             _repository = repository;
         }
 
+        /// <summary>
+        /// Gets all students
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IEnumerable<StudentModel>> GetAllAsync()
         {
@@ -33,6 +38,11 @@ namespace FinalProject.Controllers
             return rViewModel;
         }
 
+        /// <summary>
+        /// Gets one student
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<StudentModel> GetOne(int id)
         {
@@ -47,6 +57,11 @@ namespace FinalProject.Controllers
             };
         }
 
+        /// <summary>
+        /// Add one student
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task Add(StudentModel student)
         {
@@ -60,6 +75,11 @@ namespace FinalProject.Controllers
             await _repository.SaveAsync();
         }
 
+        /// <summary>
+        /// Delete one student
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
         [HttpDelete]
         public void DeleteOneAsync(int id)
         {

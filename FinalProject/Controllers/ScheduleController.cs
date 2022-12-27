@@ -18,6 +18,11 @@ namespace FinalProject.Controllers
             _repository = repository;
         }
 
+        /// <summary>
+        /// Gets all schedule entries
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IEnumerable<ScheduleModel>> GetAllAsync()
         {
@@ -32,6 +37,11 @@ namespace FinalProject.Controllers
             return rViewModel;
         }
 
+        /// <summary>
+        /// Gets one schedule entry by id
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
         [HttpGet("id={id}")]
         public async Task<ScheduleModel> GetById(int id)
         {
@@ -44,6 +54,11 @@ namespace FinalProject.Controllers
             };
         }
 
+        /// <summary>
+        /// Add one schedule entry
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task Add(ScheduleModel schedule)
         {
@@ -55,6 +70,27 @@ namespace FinalProject.Controllers
             await _repository.SaveAsync();
         }
 
+        ///// <summary>
+        ///// Add many schedule entries
+        ///// </summary>
+        ///// <param></param>
+        ///// <returns></returns>
+        //[HttpPost]
+        //public async Task Add(List<ScheduleModel> schedules)
+        //{
+        //    await _repository.AddAsync(new Schedule
+        //    {
+        //        StartTime = schedule.StartTime,
+        //        EndTime = schedule.EndTime
+        //    });
+        //    await _repository.SaveAsync();
+        //}
+
+        /// <summary>
+        /// Delete one schedule entry
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
         [HttpDelete]
         public void DeleteOneAsync(int id)
         {

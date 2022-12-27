@@ -17,6 +17,11 @@ namespace FinalProject.Controllers
             _repository = repository;
         }
 
+        /// <summary>
+        /// Gets all semesters
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
         [HttpGet()]
         public async Task<IEnumerable<SemesterModel>> GetAllAsync()
         {
@@ -33,6 +38,11 @@ namespace FinalProject.Controllers
             return rViewModel;
         }
 
+        /// <summary>
+        /// Gets one semester
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<SemesterModel> GetOne(int id)
         {
@@ -47,22 +57,11 @@ namespace FinalProject.Controllers
             };
         }
 
-        [HttpGet("~/GetFirst")]
-        public async Task<SemesterModel> GetFirst()
-        {
-            var Semesters = await _repository.GetAllAsync();
-
-            var firstSemester = Semesters.First();
-
-            return new SemesterModel
-            {
-                Name = firstSemester.Name,
-                StartDate = firstSemester.StartDate,
-                AvailableGPA = firstSemester.AvailableGPA.ToString(),
-                EndDate = firstSemester.EndDate,
-            };
-        }
-
+        /// <summary>
+        /// Adds one semester
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task Add(SemesterModel semester)
         {
@@ -76,8 +75,13 @@ namespace FinalProject.Controllers
             await _repository.SaveAsync();
         }
 
+        /// <summary>
+        /// Delete one semester
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
         [HttpDelete]
-        public void DeleteOneAsync(int id)
+        public void DeleteOne(int id)
         {
             _repository.Delete(id);
             _repository.SaveAsync();

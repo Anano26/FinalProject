@@ -34,6 +34,11 @@ namespace FinalProject.Controllers
             return rViewModel;
         }
 
+        /// <summary>
+        /// Gets one adress
+        /// </summary>
+        /// <param>address id</param>
+        /// <returns></returns>
         [HttpGet("id={id}")]
         public async Task<AddressModel> GetById(int id)
         {
@@ -46,6 +51,11 @@ namespace FinalProject.Controllers
             };
         }
 
+        /// <summary>
+        /// Adds one adress
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task Add(AddressModel address)
         {
@@ -57,25 +67,16 @@ namespace FinalProject.Controllers
 
             await _repository.SaveAsync();
         }
-
+        /// <summary>
+        /// Deletes one adress
+        /// </summary>
+        /// <param>address id</param>
+        /// <returns></returns>
         [HttpDelete]
         public void DeleteOneAsync(int id)
         {
             _repository.Delete(id);
             _repository.SaveAsync();
-        }
-
-
-        [HttpPut("~/update")]
-        public async void UpdateOneAsync(int id, AddressModel addressModel)
-        {
-            var address = await _repository.GetByIdAsync(id);
-
-            address.Address1 = addressModel.Address1;
-            address.Address2 = addressModel.Address2;
-            
-            _repository.Update(address);
-            await _repository.SaveAsync();
         }
     }
 }

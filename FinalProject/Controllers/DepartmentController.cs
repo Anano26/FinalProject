@@ -5,6 +5,8 @@ using Repository.Repositories;
 
 namespace FinalProject.Controllers
 {
+    //This controller is done, add xmls
+
     [ApiController]
     [Route("department")]
     public class DepartmentController : ControllerBase
@@ -15,6 +17,11 @@ namespace FinalProject.Controllers
             _repository = repository;
         }
 
+        /// <summary>
+        /// Gets all departments
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IEnumerable<DepartmentModel>> GetAllAsync()
         {
@@ -30,21 +37,11 @@ namespace FinalProject.Controllers
             return rViewModel;
         }
 
-        [HttpGet("name={name}")]
-        public async Task<IEnumerable<DepartmentModel>> GetByName(string name)
-        {
-            var departments = await _repository.GetAllAsync(x => x.Name == name);
-
-            var rViewModel = departments.Select(x => new DepartmentModel
-            {
-                Name = x.Name,
-                MaxNumbOfStudents = x.MaxNumbOfStudents.ToString(),
-                CurrentAmount = x.CurrentAmount.ToString()
-            });
-
-            return rViewModel;
-        }
-
+        /// <summary>
+        /// Gets one department
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
         [HttpGet("id={id}")]
         public async Task<DepartmentModel> GetById(int id)
         {
@@ -58,6 +55,11 @@ namespace FinalProject.Controllers
             };
         }
 
+        /// <summary>
+        /// Add one department
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task Add(DepartmentModel department)
         {
@@ -71,11 +73,16 @@ namespace FinalProject.Controllers
             await _repository.SaveAsync();
         }
 
+        /// <summary>
+        /// Deletes one department
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
         [HttpDelete("/department/delete/id={id}")]
-        public void DeleteOne(int id)
+        public async void DeleteOne(int id)
         {
             _repository.Delete(id);
-            _repository.SaveAsync();
+            await _repository.SaveAsync();
         }
     }
 }

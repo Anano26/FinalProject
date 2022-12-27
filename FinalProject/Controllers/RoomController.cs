@@ -15,6 +15,11 @@ namespace FinalProject.Controllers
             _repository = repository;
         }
 
+        /// <summary>
+        /// Gets all rooms
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IEnumerable<RoomModel>> GetAllAsync()
         {
@@ -30,6 +35,11 @@ namespace FinalProject.Controllers
             return rViewModel;
         }
 
+        /// <summary>
+        /// Gets one room
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
         [HttpGet("id={id}")]
         public async Task<RoomModel> GetById(int id)
         {
@@ -43,6 +53,11 @@ namespace FinalProject.Controllers
             };
         }
 
+        /// <summary>
+        /// Adds one room
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task Add(RoomModel room)
         {
@@ -56,6 +71,29 @@ namespace FinalProject.Controllers
             await _repository.SaveAsync();
         }
 
+        /// <summary>
+        /// Adds multiple rooms
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
+        [HttpPost("~/AddManyRooms")]
+        public async Task Add(List<RoomModel> rooms)
+        {
+            rooms.ForEach(x => _repository.AddAsync(new Room
+            {
+                Description = x.Description,
+                IsFree = Boolean.Parse(x.IsFree),
+                MaxNumberOfStudents = Int32.Parse(x.MaxNumberOfStudents)
+            }));
+
+            await _repository.SaveAsync();
+        }
+
+        /// <summary>
+        /// Delete one room
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
         [HttpDelete]
         public void DeleteOneAsync(int id)
         {
