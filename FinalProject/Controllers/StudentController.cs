@@ -1,6 +1,7 @@
 ﻿using FinalProject.Models;
 using FinalProject.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Operations;
 using Repository.Repositories;
 
 namespace FinalProject.Controllers
@@ -85,6 +86,49 @@ namespace FinalProject.Controllers
         {
             _repository.Delete(id);
             _repository.SaveAsync();
+        }
+
+
+        /// <summary>
+        /// Adds an address to a student
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
+        [HttpPost("/AddOrChangeStudentAddress")]
+        public async Task AddOrChangeStudentAddress(int studentId, AddressModel addressModel)
+        {
+            var student = await  _repository.GetByIdAsync(studentId);
+
+            Address address = new Address
+            {
+                Address1 = addressModel.Address1,
+                Address2 = addressModel.Address2
+            };
+
+            student.Address = address;
+
+            _repository.Update(student);
+
+            await _repository.SaveAsync();
+        }
+
+        /// <summary>
+        /// Gets the address of a teacher
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
+        [HttpGet("~/GetStudentAddress")]
+        public async Task<AddressModel> GetStudentAddress(int studentId)
+        {
+            var student = await _repository.GetByIdAsync(studentId);
+
+            if (student.Address == null) return null;
+
+            return new AddressModel
+            {
+                Address1 = student.Address.Address1,
+                Address2 = student.Address.Address2
+            };
         }
     }
 }
